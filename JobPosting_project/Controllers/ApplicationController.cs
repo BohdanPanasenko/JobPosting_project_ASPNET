@@ -38,7 +38,7 @@ namespace JobPosting_project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ApplicationCreateDto dto)
+        public async Task<IActionResult> Create([FromBody] ApplicationCreateDto dto) //
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
