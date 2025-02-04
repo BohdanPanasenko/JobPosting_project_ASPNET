@@ -1,0 +1,15 @@
+﻿### 
+GET http://localhost:5000/api/applications
+Accept: application/json
+
+###
+
+
+POST http://localhost:5000/api/applications
+Content-Type: application/json
+
+{
+  "applicantId": 1,
+  "jobPostingId": 1,
+  "status": "Pending"
+}

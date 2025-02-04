@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPosting_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250129102245_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250129163600_Migr")]
+    partial class Migr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,31 @@ namespace JobPosting_project.Migrations
                     b.ToTable("JobSkills");
                 });
 
+            modelBuilder.Entity("JobPosting_project.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("JobPosting_project.Models.Skill", b =>
                 {
                     b.Property<int>("Id")
@@ -186,13 +211,13 @@ namespace JobPosting_project.Migrations
                     b.HasOne("JobPosting_project.Models.JobPosting", "JobPosting")
                         .WithMany("Applications")
                         .HasForeignKey("JobPostingId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("JobPosting_project.Models.User", "Applicant")
                         .WithMany("Applications")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Applicant");
@@ -228,6 +253,13 @@ namespace JobPosting_project.Migrations
                     b.Navigation("JobPosting");
 
                     b.Navigation("Skill");
+                });
+
+            modelBuilder.Entity("JobPosting_project.Models.RefreshToken", b =>
+                {
+                    b.HasOne("JobPosting_project.Models.User", null)
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("JobPosting_project.Models.UserSkill", b =>
@@ -271,6 +303,8 @@ namespace JobPosting_project.Migrations
             modelBuilder.Entity("JobPosting_project.Models.User", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("RefreshTokens");
 
                     b.Navigation("UserSkills");
                 });

@@ -17,6 +17,13 @@ namespace JobPosting_project.DTOs
         [Required(ErrorMessage = "Job posting is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Please select a valid job posting")]
         public int JobPostingId { get; set; }
+
+        [Required(ErrorMessage = "Applicant is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select a valid applicant")]
+        public int UserId { get; set; }
+
+        [Required(ErrorMessage = "Application status is required")]
+        public ApplicationStatus Status { get; set; } = ApplicationStatus.Pending;
     }
 
     public class ApplicationUpdateDto

@@ -32,6 +32,8 @@ namespace JobPosting_project.DTOs
 
             [Required(ErrorMessage = "User role is required")]
             public UserRole Role { get; set; }
+            [Required]
+            public ICollection<UserSkillCreateDto> Skills { get; set; }
         }
 
         public class UserUpdateDto
@@ -44,5 +46,20 @@ namespace JobPosting_project.DTOs
             [EmailAddress(ErrorMessage = "Invalid email address")]
             [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters")]
             public string Email { get; set; }
+
+            [Required]
+            public ICollection<UserSkillCreateDto> Skills { get; set; }
+        }
+
+        public class UserSkillReadDto
+        {
+            public int SkillId { get; set; }
+            public string SkillName { get; set; }
+        }
+
+        public class UserSkillCreateDto
+        {
+            [Required]
+            public int SkillId { get; set; }
         }
 }
